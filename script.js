@@ -177,6 +177,9 @@ const windowsBtn = $('#windowsBtn');
 const downloadLink = $('#downloadLink');
 const androidBtn = $('#androidBtn');
 const iosBtn = $('#iosBtn');
+const hero = $('#hero');
+const downloadModal = $('#downloadModal');
+const downloadModalClose = $('#downloadModalClose');
 let current = 0;
 let currentHeroScene = 0;
 
@@ -228,11 +231,25 @@ function renderHeroScenes(game) {
    Khi bấm game 01 / 02 / 03 / 04, toàn bộ Hero + link tải đổi theo game.
    ========================================================================== */
 
+function animateHeroContent() {
+  const copy = document.querySelector('.copy');
+  if (!copy) return;
+  copy.classList.remove('is-switching');
+  void copy.offsetWidth;
+  copy.classList.add('is-switching');
+}
+
 function renderGame(index) {
+  if (hero) {
+    hero.classList.add('game-changing');
+    clearTimeout(renderGame._transitionTimer);
+    renderGame._transitionTimer = setTimeout(() => hero.classList.remove('game-changing'), 620);
+  }
   current = index;
   const game = games[index];
 
   document.body.dataset.game = index;
+  animateHeroContent();
 
   // Nội dung Hero
   setHeroScene(game.hero, 0);
@@ -244,10 +261,12 @@ function renderGame(index) {
   $('#galleryDesc').textContent = `Khám phá thế giới ${game.name} qua những khung hình chân thực`;
 
 
-  // ===== GẮN LINK TẢI CỦA GAME ĐANG CHỌN =====
-  downloadLink.href = game.downloadUrl;
- // ===== GÁN LINK TẢI CỦA GAME ĐANG CHỌN =====
-downloadLink.href = game.downloadUrl;
+  // ===== NÚT TẢI GAME MỞ POPUP CHỌN NỀN TẢNG =====
+  downloadLink.href = '#';
+  downloadLink.onclick = (event) => {
+    event.preventDefault();
+    openDownloadModal(game);
+  };
 
 // ===== GÁN LINK PLATFORM =====
 if (windowsBtn) {
@@ -303,6 +322,10 @@ if (iosBtn) {
   `).join('');
 
   grid.scrollLeft = 0;
+  grid.classList.add('motion-ready');
+  if (galleryObserver && grid.getBoundingClientRect().top < window.innerHeight) {
+    requestAnimationFrame(() => grid.classList.add('is-visible'));
+  }
   bindLightbox();
   requestAnimationFrame(updateGalleryArrows);
 }
@@ -383,8 +406,131 @@ $('#viewAll').onclick = () => {
 };
 
 
+// Gallery reveal khi cuon toi khu vuc hinh anh
+const galleryObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+    }
+  });
+}, { threshold: 0.16 });
+
+galleryObserver.observe(grid);
+
+
 /* ========================================================================== 
    7. KHỞI ĐỘNG TRANG
    ========================================================================== */
 
 renderGame(0);
+
+
+
+/* ========================================================================== 
+   8. CINEMATIC EXTRAS
+   ========================================================================== */
+
+// Ambient particles - nhe, khong chen vao thao tac nguoi dung.
+const particleHost = $('#heroParticles');
+if (particleHost) {
+  for (let i = 0; i < 22; i++) {
+    const particle = document.createElement('span');
+    particle.style.left = `${(i * 37) % 101}%`;
+    particle.style.setProperty('--dur', `${7 + (i % 6) * 1.15}s`);
+    particle.style.setProperty('--delay', `${-(i % 9) * 1.05}s`);
+    particle.style.setProperty('--drift', `${((i % 7) - 3) * 22}px`);
+    particle.style.width = particle.style.height = `${2 + (i % 3)}px`;
+    particleHost.appendChild(particle);
+  }
+}
+
+// Custom cursor desktop.
+const ttvCursor = $('#ttvCursor');
+if (ttvCursor && window.matchMedia('(pointer:fine)').matches) {
+  window.addEventListener('mousemove', (event) => {
+    ttvCursor.style.left = `${event.clientX}px`;
+    ttvCursor.style.top = `${event.clientY}px`;
+  }, { passive: true });
+  document.addEventListener('mouseover', (event) => {
+    ttvCursor.classList.toggle('is-hover', Boolean(event.target.closest('a,button,.shot,.hero-scene')));
+  });
+  document.addEventListener('mousedown', () => ttvCursor.classList.add('is-down'));
+  document.addEventListener('mouseup', () => ttvCursor.classList.remove('is-down'));
+}
+
+// Popup tai game.
+function openDownloadModal(game) {
+  if (!downloadModal) return;
+  $('#downloadModalGame').textContent = game.name;
+  $('#downloadModalMeta').textContent = `Phiên bản ${game.version} · Dung lượng ${game.size} · Cập nhật ${game.date}`;
+  downloadModal.querySelectorAll('.modal-size').forEach(el => el.textContent = game.size);
+  downloadModal.querySelector('[data-platform="windows"]').onclick = () => openPlatform(game.windowsUrl);
+  downloadModal.querySelector('[data-platform="android"]').onclick = () => openPlatform(game.androidUrl);
+  downloadModal.querySelector('[data-platform="ios"]').onclick = () => openPlatform(game.iosUrl);
+  downloadModal.classList.add('show');
+  downloadModal.setAttribute('aria-hidden', 'false');
+}
+
+function openPlatform(url) {
+  if (!url || url.trim() === '#') return;
+  window.open(url.trim(), '_blank', 'noopener,noreferrer');
+}
+
+function closeDownloadModal() {
+  if (!downloadModal) return;
+  downloadModal.classList.remove('show');
+  downloadModal.setAttribute('aria-hidden', 'true');
+}
+
+if (downloadModalClose) downloadModalClose.onclick = closeDownloadModal;
+if (downloadModal) downloadModal.onclick = (event) => {
+  if (event.target === downloadModal) closeDownloadModal();
+};
+
+// Easter egg: bam logo header 5 lan trong khoang ngan.
+let logoClicks = 0;
+let logoClickTimer;
+const headerLogo = document.querySelector('header .brand');
+if (headerLogo) {
+  headerLogo.addEventListener('click', (event) => {
+    logoClicks += 1;
+    clearTimeout(logoClickTimer);
+    logoClickTimer = setTimeout(() => { logoClicks = 0; }, 1600);
+    if (logoClicks >= 5) {
+      event.preventDefault();
+      logoClicks = 0;
+      const toast = $('#secretToast');
+      document.body.classList.remove('secret-mode');
+      void document.body.offsetWidth;
+      document.body.classList.add('secret-mode');
+      if (toast) toast.classList.add('show');
+      setTimeout(() => {
+        document.body.classList.remove('secret-mode');
+        if (toast) toast.classList.remove('show');
+      }, 2400);
+    }
+  });
+}
+
+// Escape dong ca lightbox va popup download.
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeDownloadModal();
+});
+
+
+/* ==========================================================================
+   9. LOADING SCREEN
+   Giu loader toi thieu 1.5 giay, sau do fade-out khi trang da tai xong.
+   ========================================================================== */
+const loaderStartedAt = performance.now();
+window.addEventListener('load', () => {
+  const pageLoader = document.getElementById('pageLoader');
+  if (!pageLoader) return;
+  const elapsed = performance.now() - loaderStartedAt;
+  const wait = Math.max(0, 1500 - elapsed);
+  setTimeout(() => {
+    pageLoader.classList.add('is-hidden');
+    document.body.classList.remove('is-loading');
+    setTimeout(() => pageLoader.remove(), 700);
+  }, wait);
+});

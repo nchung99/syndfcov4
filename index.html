@@ -11,7 +11,20 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="is-loading">
+
+  <!-- LOADING SCREEN -->
+  <div id="pageLoader" class="page-loader" aria-label="Đang tải Tu Tiên Vực">
+    <div class="loader-inner">
+      <div class="loader-logo-wrap">
+        <img src="assets/synd-logo.png" alt="Tu Tiên Vực" class="loader-logo">
+        <span class="loader-ring"></span>
+      </div>
+      <div class="loader-title">TU TIÊN VỰC</div>
+      <div class="loader-subtitle">ĐANG MỞ CỔNG TIÊN VỰC</div>
+      <div class="loader-line"><span></span></div>
+    </div>
+  </div>
  
   <header>
     <a class="brand" href="https://tutienvuc.com" aria-label="Về trang chính">
@@ -47,8 +60,9 @@
     <section class="hero" id="hero">
       <div class="bg" id="heroBg"></div>
       <div class="shade"></div>
+      <!-- Ambient particles trong Hero -->
+      <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
 
-     
       <aside class="pager" id="pager"></aside>
 
       <div class="copy">
@@ -127,6 +141,28 @@
 
     <span>© 2026 Synd. All rights reserved.</span>
   </footer>
+
+  <!-- DOWNLOAD MODAL -->
+  <div class="download-modal" id="downloadModal" aria-hidden="true">
+    <div class="download-modal-card" role="dialog" aria-modal="true" aria-labelledby="downloadModalTitle">
+      <button class="download-modal-close" id="downloadModalClose" type="button" aria-label="Đóng">×</button>
+      <span class="download-modal-kicker">TU TIÊN VỰC</span>
+      <h3 id="downloadModalTitle">Chọn nền tảng tải game</h3>
+      <p id="downloadModalGame"></p>
+      <div class="download-platform-list">
+        <button type="button" data-platform="windows"><b>▣ Windows</b><small>PC · <span class="modal-size"></span></small><span>→</span></button>
+        <button type="button" data-platform="android"><b>♟ Android</b><small>Mobile · Phiên bản mới nhất</small><span>→</span></button>
+        <button type="button" data-platform="ios"><b>● iOS</b><small>iPhone / iPad</small><span>→</span></button>
+      </div>
+      <div class="download-modal-meta" id="downloadModalMeta"></div>
+    </div>
+  </div>
+
+  <!-- Custom cursor - desktop -->
+  <div class="ttv-cursor" id="ttvCursor" aria-hidden="true"><i></i></div>
+
+  <!-- Easter egg -->
+  <div class="secret-toast" id="secretToast" aria-live="polite">✦ Đạo hữu đã phát hiện bí cảnh ✦</div>
 
   <!-- Lightbox xem ảnh -->
   <div class="lightbox" id="lightbox">
