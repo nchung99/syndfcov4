@@ -2,77 +2,138 @@
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SyndFCO — Light Launcher</title>
-  <link rel="icon" href="assets/images/logo/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu Tiên Vực — Tải game</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,700;1,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header class="topbar">
-  <a class="brand" href="#home"><span class="brand-mark">S</span><b>Synd<span>FCO</span></b></a>
-  <nav>
-    <a class="active" href="#home">Trang chủ</a><a href="#games">Game</a><a href="#news">Tin tức</a>
-    <a href="#giftcode">Giftcode</a><a href="#support">Hỗ trợ</a><a href="#community">Cộng đồng</a>
-  </nav>
-  <div class="head-actions"><button class="icon-btn">⌕</button><a class="login" href="#community">Cộng đồng</a></div>
-</header>
+ 
+  <header>
+    <a class="brand" href="https://tutienvuc.com" aria-label="Về trang chính">
+      <img src="assets/synd-logo.png" alt="Tu Tiên Vực" class="brand-logo">
+      <span>
+        <b>TU TIÊN VỰC</b>
+        <small>Thế giới tu tiên trong tầm tay</small>
+      </span>
+    </a>
 
-<main>
-<section class="hero" id="home">
-  <div class="hero-slide active" style="--hero:url('assets/images/hero/hero-1.webp')">
-    <div class="hero-copy"><span class="eyebrow">SYND FCO // GAME PORTAL</span><h1>THẾ GIỚI MỚI<br><em>ĐANG CHỜ BẠN</em></h1>
-      <p>Khám phá những tựa game hấp dẫn và bước vào hành trình phiêu lưu của riêng bạn.</p>
-      <div class="hero-actions"><a class="btn primary" href="#games">Chơi ngay</a><button class="btn ghost trailer">▶ Xem trailer</button></div>
+    <nav>
+      
+      <a href="https://tutienvuc.com">Trang chủ</a>
+  
+      <a href="#gallery">Hình ảnh</a>
+      
+      <a href="https://zalo.me/g/gxyvsu994" target="_blank">Cộng đồng</a>   
+      <a href="https://zalo.me/0528456853" target="_blank">Hỗ trợ</a>        
+    </nav>
+
+    <div class="head-actions">
+      <a class="home-link" href="https://tutienvuc.com" aria-label="Về trang chính" title="Về Tu Tiên Vực">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10.8 12 3l9 7.8v9.1a1.1 1.1 0 0 1-1.1 1.1h-5.2v-6.2H9.3V21H4.1A1.1 1.1 0 0 1 3 19.9z"/>
+        </svg>
+        <span>Trang chính</span>
+      </a>
     </div>
+  </header>
+
+  <main>
+   
+    <section class="hero" id="hero">
+      <div class="bg" id="heroBg"></div>
+      <div class="shade"></div>
+
+     
+      <aside class="pager" id="pager"></aside>
+
+      <div class="copy">
+        <span class="tag" id="gameTag"></span>
+        <h1 id="gameTitle"></h1>
+        <h2 id="gameSlogan"></h2>
+        <p id="gameDesc"></p>
+
+        <div class="platforms">
+          <button type="button" id="windowsBtn">
+            ▣ Windows
+          </button>
+          <button type="button" id="androidBtn">
+            ♟ Android
+          </button>
+          <button type="button" id="iosBtn">
+            ● iOS
+          </button>
+          
+          
+        </div>
+
+        
+        <a class="download" id="downloadLink" href="#" target="_blank" rel="noopener">
+          TẢI GAME <span>⇩</span>
+        </a>
+
+        <div class="meta" id="gameMeta"></div>
+      </div>
+
+      <div class="calligraphy">
+        一念登仙<br>
+        萬界隨行
+        <small>修仙</small>
+      </div>
+
+      <!-- 4 ảnh Hero Scene Selector, được tạo từ script.js -->
+      <div class="hero-scenes" id="heroScenes"></div>
+    </section>
+
+   
+    <section class="gallery-section" id="gallery">
+      <div class="section-head">
+        <div>
+          <span>HÌNH ẢNH GAME</span>
+          <p id="galleryDesc"></p>
+        </div>
+        <button id="viewAll">Xem tất cả　→</button>
+      </div>
+
+      <div class="gallery-wrap">
+        <button class="gallery-arrow prev" aria-label="Ảnh trước">‹</button>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <button class="gallery-arrow next" aria-label="Ảnh tiếp theo">›</button>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div><strong>◇</strong><span><b>An toàn</b><small>File chính chủ, không virus</small></span></div>
+      <div><strong>↻</strong><span><b>Luôn cập nhật</b><small>Phiên bản mới nhất</small></span></div>
+      <div><strong>◉</strong><span><b>Hỗ trợ 24/7</b><small>Đội ngũ hỗ trợ nhanh chóng</small></span></div>
+      <div><strong>▣</strong><span><b>Hướng dẫn cài đặt</b><small>Chi tiết, dễ hiểu</small></span></div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand foot" href="https://tutienvuc.com">
+      <img src="assets/synd-logo.png" alt="Tu Tiên Vực" class="brand-logo">
+      <span>
+        <b>TU TIÊN VỰC</b>
+        <small>Thế giới tu tiên trong tầm tay</small>
+      </span>
+    </a>
+
+    
+
+    <span>© 2026 Synd. All rights reserved.</span>
+  </footer>
+
+  <!-- Lightbox xem ảnh -->
+  <div class="lightbox" id="lightbox">
+    <button aria-label="Đóng">×</button>
+    <img src="" alt="Preview">
   </div>
-  <button class="hero-arrow left">‹</button><button class="hero-arrow right">›</button>
-  <div class="hero-index"><b>01</b><span>/03</span><i></i></div>
-</section>
 
-<section class="section" id="games">
-  <div class="section-head"><h2>Danh sách game</h2><a href="#">Xem tất cả →</a></div>
-  <div class="game-grid">
-    <article><img src="assets/images/games/game-1.webp"><div class="card-shade"></div><div class="game-meta"><h3>Thần Ma Giáng Thế</h3><p>MMORPG</p></div><a href="#" class="round">→</a></article>
-    <article><img src="assets/images/games/game-2.webp"><div class="card-shade"></div><div class="game-meta"><h3>Infinity Kingdom</h3><p>Chiến thuật</p></div><a href="#" class="round">→</a></article>
-    <article><img src="assets/images/games/game-3.webp"><div class="card-shade"></div><div class="game-meta"><h3>Thần Cơ Ấn</h3><p>Nhập vai</p></div><a href="#" class="round">→</a></article>
-    <article><img src="assets/images/games/game-4.webp"><div class="card-shade"></div><div class="game-meta"><h3>Ethereal Slayer</h3><p>Action RPG</p></div><a href="#" class="round">→</a></article>
-  </div>
-</section>
-
-<section class="section" id="news">
-  <div class="section-head"><h2>Tin tức nổi bật</h2><a href="#">Xem tất cả →</a></div>
-  <div class="news-layout">
-    <article class="news-main"><img src="assets/images/news/news-1.webp"><div class="news-overlay"><span>SỰ KIỆN</span><h3>Sự kiện chiến trường chính thức ra mắt</h3><p>12/06/2026</p></div></article>
-    <div class="news-list">
-      <article><img src="assets/images/news/news-2.webp"><div><span>CẬP NHẬT</span><h4>Cập nhật phiên bản mới</h4><p>10/06/2026</p></div></article>
-      <article><img src="assets/images/news/news-3.webp"><div><span>SỰ KIỆN</span><h4>Sự kiện đua top server mới</h4><p>08/06/2026</p></div></article>
-      <article><img src="assets/images/news/news-4.webp"><div><span>THÔNG BÁO</span><h4>Bảo trì hệ thống định kỳ</h4><p>05/06/2026</p></div></article>
-    </div>
-  </div>
-</section>
-
-<section class="gift" id="giftcode">
-  <div class="gift-art left-art"></div>
-  <div class="gift-copy"><span>HỆ THỐNG QUÀ TẶNG</span><h2>NHẬN GIFTCODE NGAY</h2><p>Nhập code để nhận quà hấp dẫn trong game.</p>
-    <form onsubmit="event.preventDefault(); document.querySelector('.gift-msg').textContent='Đã nhận yêu cầu kiểm tra code ✦'">
-      <input placeholder="Nhập mã code của bạn..."><button>Nhận quà</button>
-    </form><small class="gift-msg"></small>
-  </div>
-  <div class="gift-character"></div>
-</section>
-</main>
-
-<footer id="support">
-  <div class="footer-brand"><a class="brand" href="#home"><span class="brand-mark">S</span><b>Synd<span>FCO</span></b></a><p>Play More, Live Bigger.<br>Nền tảng game dành cho mọi game thủ.</p></div>
-  <div><h4>Liên kết</h4><a href="#home">Trang chủ</a><a href="#games">Game</a><a href="#news">Tin tức</a><a href="#giftcode">Giftcode</a></div>
-  <div><h4>Hỗ trợ</h4><a href="#">Trung tâm hỗ trợ</a><a href="#">Liên hệ</a><a href="#">Điều khoản</a><a href="#">Chính sách bảo mật</a></div>
-  <div id="community"><h4>Kết nối với chúng tôi</h4><div class="socials"><a href="https://www.facebook.com/hungneee/" target="_blank">f</a><a href="#">▶</a><a href="#">◉</a></div></div>
-  <div class="copyright">© 2026 Synd. All rights reserved.<span>Made for Gamers</span></div>
-</footer>
-
-<div class="modal"><div class="modal-box"><button class="modal-close">×</button><video controls src="assets/videos/trailer-1.mp4"></video></div></div>
-<script src="script.js"></script>
-</body></html>
+  <script src="script.js"></script>
+</body>
+</html>
